@@ -1,0 +1,100 @@
+Refer URL - "https://intranet.wiki.zoho.com/mickeyhelp/MickeyLite---Getting---Started.html"
+
+Requirements :
+
+1. MickeyLite supports PostgreSQL 9.4.4 & above, MSSQL 2005 & above, MySQL 5.5.21 and 5.7.18 
+
+2. MickeyLite requires Java1.8 or above. Either bundle an appropriate JRE in the <product-home>* or Install JDK 1.7 or above and set an environment variable JAVA_HOME* to the java installation directory (Example   <C:\Java\jdk1.8.0_77>)
+
+Steps to be followed for setting up MickeyLite in Local Machine :
+
+1.Download MickeyLite build from "MickeyHome Page"/Downloads (Refer Url mentioned at the Top of the Document)
+2.MickeyLite build will be available in Zip format named as "AdventNetMickeyLite.zip"
+3.Extract the zip file in Home directory
+4.MickeyLite is available for both 32bit and 64bit OS, By default all the configurations are configured for 32bit OS. For 64bit OS, some manual file replacements to be done.
+5.(For 64bit OS)The files in the directory <product-home>/64bit should be merged and replaced with <product-home>/lib and <product-home>/bin in the directory <product-home> directory.  
+
+
+Setting up Database Connection (MySql) :
+
+The Database configuration is defaultyly configured for PostgreSQL
+
+1) Download the mysql connector jar file from mickey-server and place it in: <mickey-home>/lib
+2) Go to <mickey-home>/tools/mysql/conf/ and copy both the files.
+3) Paste these files in the following directory <mickey-home>/conf/
+4) Edit the database_params.conf file as follows
+
+# $Id$
+# driver name
+drivername=com.mysql.jdbc.Driver
+
+# login username for database if any
+username= <mysql-username> 
+#Eg: username=root
+
+# password for the db can be specified here
+password= <mysql-password>
+#Eg: password=root
+
+# url is of the form jdbc:subprotocol:DataSourceName for eg.jdbc:odbc:mickeylite
+url=jdbc:mysql://localhost:<port-number>/<Database-Name>
+#Eg: url=jdbc:mysql://localhost:8090/<project-name>
+
+# Minumum Connection pool size
+minsize=1
+
+# Maximum Connection pool size
+maxsize=20
+
+# transaction Isolation level
+#values are Constanst defined in java.sql.connection type supported TRANSACTION_NONE    0
+#Allowed values are TRANSACTION_READ_COMMITTED , TRANSACTION_READ_UNCOMMITTED ,TRANSACTION_REPEATABLE_READ , TRANSACTION_SERIALIZABLE
+transaction_isolation=TRANSACTION_READ_COMMITTED
+
+
+
+
+5) Go to <mickey-home>/conf/Persistence/persistence-configurations.xml and edit the configuration value for DBName to "mysql"
+6) We must create modules to use our database tables in our mickey application
+7) Create a module by simply creating a folder in <mickey-home>/conf/ and adding a data-dictionary.xml file in this directory
+8) Edit the data-dictionary.xml file as follows
+
+Example:
+
+<!DOCTYPE data-dictionary SYSTEM "data-dictionary.dtd">
+<data-dictionary name="StudentDetails">
+	<table name="Student">
+		<description>This Table contains all Table Details</description>
+		<columns>
+			<column name="ROLL_NO">
+				<data-type>BIGINT</data-type>
+			</column>
+			<column name="NAME">
+				<data-type>CHAR</data-type>
+				<max-size>150</max-size>
+			</column>
+		</columns>
+		<primary-key name="Student_PK">
+			<primary-key-column>ROLL_NO</primary-key-column>
+		</primary-key>
+	</table>
+</data-dictionary>
+
+IMPORTANT NOTE: 
+
+	(I) "name" property of data-dictionary must be same as the directory name and is considered as the name of the module
+	(II) Include the tables from your database and their respective columns and primary keys in the given format
+	(III) Include the name of the module in module.xml file at the end
+	(IV) Refer Mickey Documentation for Rules and Standards of defining a Data-dictionary
+
+9) Bundle your web application into .war file and place it in the following folder: <mickey-home>/webapps
+
+	* Include the following jar files to build path ( Do not add to deployment assembly ): 
+		--- <mickey-home>/lib/AdvPersistence.jar
+		--- <mickey-home>/lib/AdvMicroFramework.jar
+	* Import the required classes and packages ( Refer sample mickey project for example )
+	* After preparing the web application export it as a .war file and place it in the webapps folder
+	* Start the mickey server to access your web application from the browser.
+
+10) Start the mickey server using run.sh in <mickey-home>/bin 
+

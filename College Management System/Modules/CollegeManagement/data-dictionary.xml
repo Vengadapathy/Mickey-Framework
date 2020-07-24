@@ -1,0 +1,396 @@
+<?xml version="1.0" ?>
+<!DOCTYPE data-dictionary SYSTEM "data-dictionary.dtd">
+<data-dictionary name="CollegeManagement">
+	<table name="Department">
+		<description>This Table contains all Department Details</description>
+		<columns>
+			<column name="DEPT_ID">
+				<data-type>BIGINT</data-type>
+				<uniquevalue-generation>
+                                      <generator-name>DEPT_ID</generator-name>
+                                </uniquevalue-generation>
+			</column>
+			<column name="DEPT_NAME">
+				<data-type>CHAR</data-type>
+				<max-size>150</max-size>
+				<nullable>false</nullable>
+				<unique>true</unique>
+			</column>
+		</columns>
+		<primary-key name="Department_PK">
+			<primary-key-column>DEPT_ID</primary-key-column>
+		</primary-key>
+	</table>
+
+	<table name="Person">
+		<description>This Table contains Sturecture of a person</description>
+		<columns>
+			<column name="PERSON_ID">
+				<data-type>BIGINT</data-type>
+				<uniquevalue-generation>
+                                      <generator-name>PERSON_ID</generator-name>
+                                </uniquevalue-generation>
+			</column>
+			<column name="PERSON_NAME">
+				<data-type>CHAR</data-type>
+				<max-size>150</max-size>
+				<nullable>false</nullable>
+			</column>
+			<column name="DOB">
+				<data-type>DATE</data-type>
+                                <nullable>false</nullable>
+			</column>
+			<column name="GENDER">
+                                <data-type>CHAR</data-type>
+                                <max-size>10</max-size>
+                                <nullable>false</nullable>
+                                <!--Allowed Values-->
+                                <allowed-values>
+                                        <value>Male</value>
+                                        <value>Female</value>
+					<value>Other</value>
+                                </allowed-values>
+                        </column>
+			<column name="BLOOD_GRP">
+				<data-type>CHAR</data-type>
+				<max-size>10</max-size>
+                                <nullable>false</nullable>
+			</column>
+			<column name="PHONE_NO">
+				<data-type>BIGINT</data-type>
+                                <nullable>false</nullable>
+			</column>
+			<column name="MAILID">
+                                    <data-type>CHAR</data-type>
+                                    <max-size>30</max-size>
+                                    <!--Default Value-->
+                                    <!-- <default-value>azamsharp@gmail.com</default-value> -->
+                                    <nullable>false</nullable>
+                                    <!--Allowed Pattern-->
+                                    <!-- <allowed-values>
+                                             <pattern>^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$</pattern>
+                                    </allowed-values> -->
+                         </column>
+			<column name="ADDRESS">
+				<data-type>CHAR</data-type>
+				<max-size>200</max-size>
+				<nullable>false</nullable>
+			</column>
+			<column name="CITY">
+				<data-type>CHAR</data-type>
+				<max-size>200</max-size>
+				<nullable>false</nullable>
+			</column>	
+		</columns>
+		<primary-key name="Person_PK">
+			<primary-key-column>PERSON_ID</primary-key-column>
+		</primary-key>
+	</table>
+
+	
+	<table name="Student">
+		<description>This Table contains all Student Details</description>
+		<columns>
+			<column name="STUDENT_ID">
+				<data-type>BIGINT</data-type>
+				<uniquevalue-generation>
+                                      <generator-name>STUDENT_ID</generator-name>
+                                </uniquevalue-generation>
+			</column>
+			<column name="PERSON_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+			
+			<column name="DEPT_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="DOA">
+				<data-type>DATE</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="YEAR">
+				<data-type>INTEGER</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="SECTION">
+				<data-type>CHAR</data-type>
+				<max-size>10</max-size>
+				<nullable>false</nullable>
+			</column>
+			<column name="FEES_DUE">
+				<data-type>DOUBLE</data-type>
+				<max-size>10</max-size>
+				<precision>2</precision>
+				<default-value>20000.00</default-value>
+				<nullable>false</nullable>
+			</column>
+		</columns>
+		<primary-key name="Student_PK">
+			<primary-key-column>STUDENT_ID</primary-key-column>
+		</primary-key>
+		<foreign-keys>
+			<foreign-key name="Student_FK1" reference-table-name="Person">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>PERSON_ID</fk-local-column>
+			    			<fk-reference-column>PERSON_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		  	<foreign-key name="Student_FK2" reference-table-name="Department">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>DEPT_ID</fk-local-column>
+			    			<fk-reference-column>DEPT_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		</foreign-keys>
+	</table>
+
+
+	<table name="Faculty">
+		<description>This Table contains all Faculty Details</description>
+		<columns>
+			<column name="FACULTY_ID">
+				<data-type>BIGINT</data-type>
+				<uniquevalue-generation>
+                                      <generator-name>FACULTY_ID</generator-name>
+                                </uniquevalue-generation>
+			</column>
+			<column name="PERSON_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="DEPT_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="DESIGNATION">
+				<data-type>CHAR</data-type>
+				<max-size>150</max-size>
+				<default-value>Associate Professor</default-value>
+				<nullable>false</nullable>
+				
+			</column>
+			<column name="SALARY">
+				<data-type>DOUBLE</data-type>
+				<max-size>10</max-size>
+				<precision>2</precision>
+				<default-value>25000</default-value>
+				<nullable>false</nullable>
+			</column>
+			<column name="DOJ">
+				<data-type>DATE</data-type>
+				<nullable>false</nullable>
+			</column>
+		</columns>
+		<primary-key name="Faculty_PK">
+			<primary-key-column>FACULTY_ID</primary-key-column>
+		</primary-key>
+		<foreign-keys>
+			<foreign-key name="Faculty_FK1" reference-table-name="Person">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>PERSON_ID</fk-local-column>
+			    			<fk-reference-column>PERSON_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		  	<foreign-key name="Faculty_FK2" reference-table-name="Department">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>DEPT_ID</fk-local-column>
+			    			<fk-reference-column>DEPT_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		</foreign-keys>
+	</table>
+
+	<table name="PersonToStudentMap">
+		<columns>
+			<column name="PRIMARYKEY_ID">
+				<data-type>BIGINT</data-type>
+				<uniquevalue-generation>
+		                        <generator-name>PersonToStudentMap.PRIMARYKEY_ID</generator-name>
+		                </uniquevalue-generation>
+			</column>
+			<column name="PERSON_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="STUDENT_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+		</columns>
+		<primary-key name="PersonToStudentMap_PK">
+			<primary-key-column>PRIMARYKEY_ID</primary-key-column>
+		</primary-key>
+		<foreign-keys>
+			<foreign-key name="PersonToStudentMap_FK1" reference-table-name="Person">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>PERSON_ID</fk-local-column>
+			    			<fk-reference-column>PERSON_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		  	<foreign-key name="PersonToStudentMap_FK2" reference-table-name="Student">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>STUDENT_ID</fk-local-column>
+			    			<fk-reference-column>STUDENT_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		</foreign-keys>
+		<unique-keys>
+			<unique-key name="PersonToStudentMap_UK1">
+				<unique-key-column>PERSON_ID</unique-key-column>
+				<unique-key-column>STUDENT_ID</unique-key-column>
+		   	</unique-key>
+		</unique-keys>
+	</table>
+	<table name="PersonToFacultyMap">
+		<columns>
+			<column name="PRIMARYKEY_ID">
+				<data-type>BIGINT</data-type>
+				<uniquevalue-generation>
+		                        <generator-name>PersonToFacultyMap.PRIMARYKEY_ID</generator-name>
+		                </uniquevalue-generation>
+			</column>
+			<column name="PERSON_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="FACULTY_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+		</columns>
+		<primary-key name="PersonToFacultyMap_PK">
+			<primary-key-column>PRIMARYKEY_ID</primary-key-column>
+		</primary-key>
+		<foreign-keys>
+			<foreign-key name="PersonToFacultyMap_FK1" reference-table-name="Person">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>PERSON_ID</fk-local-column>
+			    			<fk-reference-column>PERSON_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		  	<foreign-key name="PersonToFacultyMap_FK2" reference-table-name="Faculty">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>FACULTY_ID</fk-local-column>
+			    			<fk-reference-column>FACULTY_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		</foreign-keys>
+		<unique-keys>
+			<unique-key name="PersonToFacultyMap_UK1">
+				<unique-key-column>PERSON_ID</unique-key-column>
+				<unique-key-column>FACULTY_ID</unique-key-column>
+		   	</unique-key>
+		</unique-keys>
+	</table>
+	<table name="FeesPayment">
+		<columns>
+			<column name="BILL_NO">
+				<data-type>BIGINT</data-type>
+				<uniquevalue-generation>
+		                        <generator-name>BILL_NO</generator-name>
+		                </uniquevalue-generation>
+			</column>
+			<column name="STUDENT_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="PAYMENT_DATE">
+				<data-type>DATE</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="DUE_DATE">
+				<data-type>DATE</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="DESCRIPTON">
+				<data-type>CHAR</data-type>
+				<max-size>300</max-size>
+				<nullable>false</nullable>
+			</column>
+		</columns>
+		<primary-key name="FeesPayment_PK">
+			<primary-key-column>BILL_NO</primary-key-column>
+		</primary-key>
+		<foreign-keys>
+			<foreign-key name="FeesPayment_FK1" reference-table-name="Student">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>STUDENT_ID</fk-local-column>
+			    			<fk-reference-column>STUDENT_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		</foreign-keys>
+	</table>
+	<table name="Attendance">
+		<columns>
+			<column name="ENTRY_NO">
+				<data-type>BIGINT</data-type>
+				<uniquevalue-generation>
+		                        <generator-name>ENTRY_NO</generator-name>
+		                </uniquevalue-generation>
+			</column>
+			<column name="PERSON_ID">
+				<data-type>BIGINT</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="DATE">
+				<data-type>DATE</data-type>
+				<nullable>false</nullable>
+			</column>
+			<column name="ATTENDANCE">
+				<data-type>BOOLEAN</data-type>
+				<nullable>false</nullable>
+			</column>
+		</columns>
+		<primary-key name="Attendance_PK">
+			<primary-key-column>ENTRY_NO</primary-key-column>
+		</primary-key>
+		<foreign-keys>
+			<foreign-key name="Attendance_FK1" reference-table-name="Person">
+				<fk-columns>
+					<fk-column>
+			    			<fk-local-column>PERSON_ID</fk-local-column>
+			    			<fk-reference-column>PERSON_ID</fk-reference-column>
+					</fk-column>
+				</fk-columns>
+		      		<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		   	</foreign-key>
+		</foreign-keys>
+		<unique-keys>
+			<unique-key name="Attendance_UK1">
+				<unique-key-column>PERSON_ID</unique-key-column>
+				<unique-key-column>DATE</unique-key-column>
+		   	</unique-key>
+		</unique-keys>
+	</table>
+	
+</data-dictionary> 
+
